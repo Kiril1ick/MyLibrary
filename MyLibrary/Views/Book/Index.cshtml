@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MyLibrary.Models.Book>
+
+<h1 class="title">My Library</h1>
+
+<p>
+    <a class="button" asp-action="Create">Create New</a>
+</p>
+
+<form method="get" asp-action="Index">
+    <p>
+        <input type="search" placeholder="Enter Books Title or Autor ..." value="@ViewData["Search"]" name="Searching" style="width:500px;" />
+        <input type="submit" value="Search" class="btn btn-primary"/>
+        <a asp-action="Index">Get All Books</a>
+    </p>
+</form>
+<center><img src="https://acegif.com/wp-content/gifs/book-90.gif" style="width:40px; height: 40px; text-align: center;"/></center>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cover)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>Events</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <img src="@item.Cover" style="width:180px; height :200px">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre.GenreName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) | 
+                @Html.ActionLink("Delete", "Delete", new { id=item.BookId },
+                new {onclick = "return confirm('Confirm delete ?')"})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
